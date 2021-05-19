@@ -827,6 +827,23 @@ curl -X GET \
 }]
 ```
 
+## Bin compartidos para Customers
+
+Cuando hay dos medios de pagos activos(tarjetas de credito y debito) con el "bin compartido" (primeros 6 digitos de las tarjetas), por ello es necesario enviar siempre los campos [issuer_id] y [payment_method_id]
+
+En el caso de que actualize algún bin para que sea compartido y como no son posteados esos dos campos se devolvera un statuCode 4XX
+
+Ejemplo de datos a enviar:
+```json
+{
+  ...
+  "issuer_id": "32",
+  "payment_method_id": "visa",
+  "payment_type_id": "credit_card"
+  ...
+}
+```
+
 ## Cancelaciones y devoluciones
 
 Las cancelaciones se efectúan cuando el pago en efectivo no se concretó antes de la fecha de vencimiento y el vendedor decide cancelarlo. Y las devoluciones suceden cuando el pago se realizó pero el vendedor decide anularlo total o parcialmente.
