@@ -16,7 +16,7 @@ Los *customers* representan a tus clientes. Las tarjetas que almacenes serán pa
 
 ## Creación de un customer y una card
 
-Para crear un `Customer` y una `Card` al mismo tiempo es necesario enviar por lo menos los campos `email` y `token`.
+Para crear un `Customer` y una `Card` al mismo tiempo es necesario enviar por lo menos los campos `issuer_id`, `payment_method_id`,`email` y `token`.
 
 El `token` es el que capturas cuando haces el [manejo de la respuesta](https://www.mercadopago[FAKER][URL][DOMAIN]/developers/es/guides/online-payments/checkout-api/handling-responses) del *Web Tokenize Checkout*.
 
@@ -43,6 +43,8 @@ El `token` es el que capturas cuando haces el [manejo de la respuesta](https://w
   $card = new MercadoPago\Card();
   $card->token = "9b2d63e00d66a8c721607214cedaecda";
   $card->customer_id = $customer->id();
+  $card->issuer_id = "23";
+  $card->payment_method_id = "debit_card";
   $card->save();
 
 ?>
@@ -59,6 +61,8 @@ customer.save();
 Card card = new Card();
 card.setToken("9b2d63e00d66a8c721607214cedaecda");
 card.setCustomerId(customer.getId());
+card.setIssuerId("23");
+card.setPaymentMethodId("debit_card");
 card.save();
 
 ```
@@ -75,7 +79,9 @@ mercadopago.customers.create(customer_data).then(function (customer) {
 
   card_data = {
     "token": "9b2d63e00d66a8c721607214cedaecda",
-    "customer_id": customer.body.id 
+    "customer_id": customer.body.id,
+    "issuer_id": "23",
+    "payment_method_id": "debit_card" 
   }
 
   mercadopago.card.create(card_data).then(function (card) {
@@ -102,7 +108,9 @@ customer = customer_response[:response]
 
 card_data = {
   token: '9b2d63e00d66a8c721607214cedaecda',
-  customer_id: customer['id']
+  customer_id: customer['id'],
+  issuer_id: '23',
+  payment_method_id: 'debit_card'
 }
 card_response = sdk.card.create(card_data)
 card = card_response[:response]
@@ -121,6 +129,8 @@ Customer customer = await customerClient.CreateAsync(customerRequest);
 var cardRequest = new CustomerCardCreateRequest
 {
     Token = "9b2d63e00d66a8c721607214cedaecda",
+    issuer_id = "23",
+    payment_method_id = "debit_card"
 };
 CustomerCard card = await customerClient.CreateCardAsync(customer.Id, cardRequest);
 ```
@@ -135,7 +145,9 @@ customer_response = sdk.customer().create(customer_data)
 customer = customer_response["response"]
 
 card_data = {
-  "token": "9b2d63e00d66a8c721607214cedaecda"
+  "token": "9b2d63e00d66a8c721607214cedaecda",
+  "issuer_id": "23",
+  "payment_method_id": "debit_card"
 }
 card_response = sdk.card().create(customer["id"], card_data)
 card = card_response["response"]
@@ -293,45 +305,6 @@ Por ejemplo:
 </script>
 ```
 
-## Bin compartidos para Customers
-
-Cuando hay dos medios de pagos activos(tarjetas de credito y debito) con el "bin compartido" (primeros 6 digitos de las tarjetas), por ello es necesario enviar siempre estos dos campos [issuer_id] y [payment_method_id]
-
-En el caso de que actualize algún bin para que sea compartido y como no son posteados esos dos campos se devolvera un statuCode 4XX
-
-Ejemplo de datos a enviar:
-```json
-{
-  ...
-  "issuer_id": "32",
-  "payment_method_id": "visa",
-  "payment_type_id": "credit_card"
-  ...
-}
-```
-
-Por ejemplo de dos pagos activos con bin compartidos:
-```json
-{
-      "id": "user",
-      "issuer": {
-        "default": false,
-        "id": 12345,
-        "name": "Banco"
-      },
-      "payment_type_id": "credit_card"
-    },
-    {
-      "id": "user",
-      "issuer": {
-        "default": false,
-        "id": 12345,
-        "name": "Banco"
-      },
-      "payment_type_id": "debit_card"
-    },
-```
-
 > Esta documentación utiliza la nueva versión de la librería. Para ver la versión anterior, ve a la [sección de Clientes y tarjetas almacenadas con MercadoPago.js V1](https://www.mercadopago[FAKER][URL][DOMAIN]/developers/es/guides/online-payments/web-tokenize-checkout/v1/customers-and-cards).
 
 
@@ -352,6 +325,8 @@ Es posible agregar nuevas tarjetas a tu `Customer`. Para esto debes crear un `to
   $card = new MercadoPago\Card();
   $card->token = "9b2d63e00d66a8c721607214cedaecda";
   $card->customer_id = $customer->id;
+  $card->issuer_id = "23";
+  $card->payment_method_id = "debit_card";
   $card->save();
 
   print_r($card);
@@ -368,6 +343,8 @@ Customer customer = Customer.load("247711297-jxOV430go9fx2e")
 Card card = new Card();
 card.setToken("9b2d63e00d66a8c721607214cedaecda");
 card.setCustomerId(customer.getID());
+card.setIssuerId("23");
+card.setPaymentMethodId("debit_card");
 card.save();
 
 System.out.print(card.toString());
@@ -389,7 +366,9 @@ mercadopago.customers.search({
 }).then(function (customer) {
   card_data = {
     "token": "9b2d63e00d66a8c721607214cedaecda",
-    "customer": customer.id
+    "customer": customer.id,
+    "issuer_id": "23",
+    "payment_method_id": "debit_card"
   }
 
   mercadopago.cards.create(card_data).then(function (card) {
@@ -413,7 +392,9 @@ customer = customer_response[:response]
 
 card_data = {
   token: '9b2d63e00d66a8c721607214cedaecda',
-  customer_id: customer['id']
+  customer_id: customer['id'],
+  issuer_id: '23',
+  payment_method_id: 'debit_card'
 }
 card_response = sdk.card.create(card_data)
 card = card_response[:response]
@@ -430,6 +411,8 @@ Customer customer = await customerClient.GetAsync("247711297-jxOV430go9fx2e");
 var cardRequest = new CustomerCardCreateRequest
 {
     Token = "9b2d63e00d66a8c721607214cedaecda",
+    issuer_id = "23",
+    payment_method_id = "debit_card"
 };
 CustomerCard card = await customerClient.CreateCardAsync(customer.Id, cardRequest);
 
@@ -443,7 +426,9 @@ customer_response = sdk.customer().get("247711297-jxOV430go9fx2e")
 customer = customer_response["response"]
 
 card_data = {
-  "token": "9b2d63e00d66a8c721607214cedaecda"
+  "token": "9b2d63e00d66a8c721607214cedaecda",
+  "issuer_id": "23",
+  "payment_method_id": "debit_card"
 }
 card_response = sdk.card().create(customer["id"], card_data)
 card = card_response["response"]
