@@ -849,6 +849,22 @@ Las cancelaciones se efectúan cuando el pago en efectivo no se concretó antes 
 Puedes encontrar toda la información en la [sección Devoluciones y cancelaciones](https://www.mercadopago[FAKER][URL][DOMAIN]/developers/es/guides/manage-account/account/cancellations-and-refunds).
 
 ---
+
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Modificar un cliente
+
+Para modificar un customer es necesario enviar el `customer_id` y los campos que se vayan a modificar. Realizando un solicitud `HTTP PUT`. 
+campos a modificar 
+Atributo | Informacion
+-------- | -----------
+address | (Información sobre la dirección por defecto del cliente)
+default_address | Dirección por defecto del cliente
+default_card | Tarjeta por defecto del cliente
+description | Descripción del cliente
+email | Email del cliente
+first_name | Nombre del cliente
+last_name | Apellido del cliente
+phone | Teléfono del cliente
+identification | Tipo de Documentacion y numero
 ### Próximos pasos
 
 > LEFT_BUTTON
